@@ -1,10 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Va pa esa</title>
-</head>
-<body>
+<form #formCarritoCompras="ngForm"  class="form-horizontal" (ngSubmit)="realizarPago(formCarritoCompras.value)">
+  <h3>Carrito de Compra <small class="text-muted">Detalle</small></h3>
+  <hr class="sep-tt">
+  <div class="container">
+    <div *ngIf="orden && orden.items.length" class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+        <th>Producto</th>
+        <th>Descripción</th>
+        <th>Precio Unitario</th>
+        <th>Cantidad</th>
+        <th>Total</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let itemOrden of orden.items">
+          <td>{{itemOrden.producto.nombre}}</td>
+          <td>{{itemOrden.producto.descripcion}}</td>
+          <td>{{itemOrden.producto.precio | currency}}</td>
+          <td>{{itemOrden.cantidad}}</td>
+          <td>{{itemOrden.cantidad * itemOrden.producto.precio | currency}}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>{{ orden.total | currency }}</td>
+        </tr>
 
-</body>
-</html>
+        </tbody>
+      </table>
+      <div>
+        <button type="button" class="btn btn-primary" (click)="toggleMedioPago()"><span class="glyphicon glyphicon-plus"></span> {{textoIngresarEditarMedioPago}}</button>
+        <button *ngIf="mostrarRealizarPago" type="button" class="btn btn-primary" (click)="realizarPago()"><span class="glyphicon glyphicon-plus"></span> Realizar Pago</button>
+      </div>
+    </div>
+
+    <div *ngIf="orden === undefined">
+      <p>No hay productos agregados</p>
+    </div>
+
+
+  </div>
+  <div class="container padding-top-20">
+    <div *ngIf="mostrarMedioPago">
+      <h3>Datos Tarjeta de Crédito</h3>
+      <hr class="sep-tt">
+      <div class="row">
+        <div class="form-group form-inline">
+          <label for="numeroTarjeta" class="col-sm-4">Número Tarjeta</label>
+          <div class="col-sm-8">
+            <input id="numeroTarjeta" placeholder="Ej: 1234567890" [(ngModel)]="orden.medioPago.numeroTarjeta" required class="form-control" type="text" name="numeroTarjeta">
+            <div *ngIf="formCarritoCompras.controls.numeroTarjeta?.invalid
+            && formCarritoCompras.controls.numeroTarjeta?.touched" class="form-control alert-danger">
+              <em>El número de tarjeta es requerido</em>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group form-inline">
+          <label for="mesVencimiento" class="col-sm-4">Mes Vencimiento</label>
+          <div class="col-sm-8">
+            <input id="mesVencimiento" placeholder="MM" [(ngModel)]="orden.medioPago.mesVencimiento" required class="form-control" type="text" name="mesVencimiento">
+            <div *ngIf="formCarritoCompras.controls.mesVencimiento?.invalid
+            && formCarritoCompras.controls.mesVencimiento?.touched" class="form-control alert-danger">
+              <em>El mes de vencimiento de la tarjeta es requerido</em>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group form-inline">
+          <label for="anioVencimiento" class="col-sm-4">Año Vencimiento</label>
+          <div class="col-sm-8">
+            <input id="anioVencimiento" placeholder="YYYY" [(ngModel)]="orden.medioPago.anioVencimiento" required class="form-control" type="text" name="anioVencimiento">
+            <div *ngIf="formCarritoCompras.controls.anioVencimiento?.invalid
+            && formCarritoCompras.controls.anioVencimiento?.touched" class="form-control alert-danger">
+              <em>El año de vencimiento de la tarjeta es requerido</em>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group form-inline">
+          <label for="nombreTitular" class="col-sm-4">Nombre Titular</label>
+          <div class="col-sm-8">
+            <input id="nombreTitular" placeholder="John Doe" [(ngModel)]="orden.medioPago.nombreTitular" required class="form-control" type="text" name="nombreTitular">
+            <div *ngIf="formCarritoCompras.controls.nombreTitular?.invalid
+            && formCarritoCompras.controls.nombreTitular?.touched" class="form-control alert-danger">
+              <em>El nombre del titular de la tarjeta es requerido</em>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" class="btn btn-primary" (click)="confirmarMedioPago()"><span class="glyphicon glyphicon-plus"></span> Corfirmar Medio Pago</button>
+      </div>
+
+    </div>
+  </div>
+</form>
