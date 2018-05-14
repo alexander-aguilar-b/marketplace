@@ -15,7 +15,7 @@ export class ServicioAutenticacion {
 
   iniciarSesion(credencialesUsuario: ICredencialesUsuario): ISesionUsuario {
     let sesionUsuario: ISesionUsuario;
-    sesionUsuario = { token: '1234', usuario: { idUsuario: 1, nombres: 'Alexnader', apellidos: 'Aguilar', numeroDocumento: '12345678' } }
+    sesionUsuario = { token: '1234', usuario: { id: 1, nombres: 'Alexnader', apellidos: 'Aguilar', numeroDocumento: '12345678' } }
     return sesionUsuario;
   }
 }
