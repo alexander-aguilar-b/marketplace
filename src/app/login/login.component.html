@@ -1,0 +1,33 @@
+<form autocomplete="off" #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" novalidate>
+  <h3>Bienvenido al MarketPlace de Lumen Concept</h3>
+  <h4>Iniciar Sesión</h4>
+  <br>
+  <div class="container">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="login">Login:</label>
+        <input id="login" type="text" (ngModel)="login" name="login" (keyup)='onkeypress()' required  class="form-control " placeholder="Login..." />
+        <div *ngIf="loginForm.controls.login?.invalid && (loginForm.controls.login?.touched || mouseoverLogin)" class="form-control alert-danger">
+          <em>El login es requerido</em>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Contraseña:</label>
+        <input id="password" type="password" (ngModel)="password" name="password" required class="form-control" placeholder="Constraseña..."
+        />
+        <div class="form-control alert-danger" *ngIf="loginForm.controls.password?.invalid && (loginForm.controls.password?.touched || mouseoverLogin)">El password es requerido</div>
+      </div>
+
+      <!--<span (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false"><button type="submit" class="btn btn-primary" >Iniciar Sesión</button></span>-->
+      <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+      <!--<button type="button" class="btn btn-default" (click)="cancel()">Cancelar</button>-->
+
+    </div>
+  </div>
+</form>
+<br>
+<br>
+<div *ngIf="status !='200'" class="form-control alert-danger">
+  <em>{{error}}</em>
+</div>
+

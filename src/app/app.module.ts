@@ -3,16 +3,30 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
+import {CarritoComprasComponent} from './carrito-compras/carrito-compras.component';
+import { AppRoutingModule } from './/app-routing.module';
+import {ConfiguracionServicio} from "./servicios/configuracion.servicio";
+import {ServicioAutenticacion} from "./servicios/servicio.autenticacion";
+import {LoginComponent} from "./login/login.component";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    CarritoComprasComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    //,
+    AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    ConfiguracionServicio,
+    ServicioAutenticacion
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
