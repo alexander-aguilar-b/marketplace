@@ -4,6 +4,9 @@ import {IUsuario} from "../modelos/IUsuario";
 import {IProducto} from "../modelos/IProducto";
 import {IItemOrden} from "../modelos/IItemOrden";
 import {ITarjetaCredito} from "../modelos/ITarjetaCredito";
+import {ServicioCompra} from "../servicios/servicio.compra";
+import {Router} from "@angular/router";
+import {IRespuestaTransaccion} from "../modelos/IRespuestaTransaccion";
 
 @Component({
   selector: 'app-carrito-compras.component',
@@ -18,16 +21,30 @@ export class CarritoComprasComponent implements OnInit {
   textoIngresarEditarMedioPago: string;
   mostrarRealizarPago: boolean;
 
+
+  constructor(private servicioCompra: ServicioCompra, private router: Router){}
+
   ngOnInit() {
     this.mostrarMedioPago = false;
     this.mostrarRealizarPago = false;
     this.orden = this.cargarOrden();
     this.textoIngresarEditarMedioPago = 'Ingresar Medio Pago';
+
+    /*
+    this.servicioCompra.consultar().subscribe(data => {
+      console.log(data);
+    });
+
+    this.servicioCompra.realizarCompra(this.orden).subscribe(data => {
+      console.log(data);
+    });
+    */
   }
 
   cargarOrden(): IOrden {
     let cliente: IUsuario;
-    let medioPago: ITarjetaCredito = { mesVencimiento: null, nombreTitular: null, numeroTarjeta: null, anioVencimiento: null};
+    //let medioPago: ITarjetaCredito = { mesVencimiento: null, nombreTitular: null, numeroTarjeta: null, anioVencimiento: null};
+    let medioPago: ITarjetaCredito = { mesVencimiento: 2, nombreTitular: 'Alexander', numeroTarjeta: 123456, anioVencimiento: 2022};
     cliente = { id: 1, numeroDocumento: '123456789', nombres: 'Alexander', apellidos: 'Aguilar'};
     let producto1: IProducto;
     let producto2: IProducto;
@@ -41,9 +58,9 @@ export class CarritoComprasComponent implements OnInit {
     let itemOrden2: IItemOrden;
     let itemOrden3: IItemOrden;
 
-    itemOrden1 = {id: 1, cantidad: 1, producto: producto1};
-    itemOrden2 = {id: 2, cantidad: 2, producto: producto2};
-    itemOrden3 = {id: 3, cantidad: 3, producto: producto3};
+    itemOrden1 = { cantidad: 1, producto: producto1};
+    itemOrden2 = { cantidad: 2, producto: producto2};
+    itemOrden3 = { cantidad: 3, producto: producto3};
 
     let itemsOrden: IItemOrden[] = [];
     itemsOrden.push(itemOrden1);
@@ -69,15 +86,22 @@ export class CarritoComprasComponent implements OnInit {
     }
   }
 
-  confirmarMedioPago(){
+  confirmarMedioPago() {
     this.textoIngresarEditarMedioPago = 'Editar Medio de Pago';
     console.log(this.orden);
     this.mostrarMedioPago = !this.mostrarMedioPago;
     this.mostrarRealizarPago = true;
   }
 
-  realizarPago(){
+  realizarPago() {
     console.log(this.orden);
+    this.servicioCompra.realizarCompra(this.orden).subscribe(data => {
+      const respuestaTransaccion: IRespuestaTransaccion = data;
+      //console.log('respuestaTransaccion.id', respuestaTransaccion.id);
+      //console.log('respuestaTransaccion.mensaje', respuestaTransaccion.mensaje);
+      //console.log(data);
+      console.log(respuestaTransaccion);
+    });
   }
 
 }

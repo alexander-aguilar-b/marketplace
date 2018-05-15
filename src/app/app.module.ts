@@ -9,6 +9,9 @@ import {ConfiguracionServicio} from "./servicios/configuracion.servicio";
 import {ServicioAutenticacion} from "./servicios/servicio.autenticacion";
 import {LoginComponent} from "./login/login.component";
 import {FormsModule} from "@angular/forms";
+import {HttpModule} from "@angular/http";
+import {ServicioCompra} from "./servicios/servicio.compra";
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -20,12 +23,13 @@ import {FormsModule} from "@angular/forms";
   imports: [
     BrowserModule,
     FormsModule,
-    //,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [
     ConfiguracionServicio,
-    ServicioAutenticacion
+    ServicioAutenticacion,
+    ServicioCompra
   ],
   bootstrap: [AppComponent]
 })
