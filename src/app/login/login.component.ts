@@ -32,12 +32,14 @@ export class LoginComponent implements OnInit {
 
   login(formValues){
     console.log(formValues);
-    let credencialesUsuario: ICredencialesUsuario = { usuario: formValues.usuario, password: formValues.password};
-    let sesionUsuario: ISesionUsuario = this.servicioAutenticacion.iniciarSesion(credencialesUsuario);
-
-    if (sesionUsuario !== undefined && sesionUsuario.token !== ''){
-      this.router.navigate(['/carrito-compras']);
-    }
-
+    const credencialesUsuario: ICredencialesUsuario = { usuario: formValues.usuario, password: formValues.password};
+    //let sesionUsuario: ISesionUsuario = this.servicioAutenticacion.iniciarSesion(credencialesUsuario);
+    this.servicioAutenticacion.iniciarSesion(credencialesUsuario).subscribe(data => {
+        console.log('rtaLogin', data);
+        const sesionUsuario: ISesionUsuario = data;
+        if (sesionUsuario !== undefined && sesionUsuario.token !== '') {
+          this.router.navigate(['/carrito-compras']);
+        }}
+    );
   }
 }
