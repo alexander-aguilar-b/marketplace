@@ -7,6 +7,7 @@ import {ITarjetaCredito} from "../modelos/ITarjetaCredito";
 import {ServicioCompra} from "../servicios/servicio.compra";
 import {Router} from "@angular/router";
 import {IRespuestaTransaccion} from "../modelos/IRespuestaTransaccion";
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-carrito-compras.component',
@@ -95,6 +96,8 @@ export class CarritoComprasComponent implements OnInit {
 
   realizarPago() {
     console.log(this.orden);
+    const datosTarjetaEncriptados = this.encriptarDatosTarjeta(this.orden.medioPago);
+
     this.servicioCompra.realizarCompra(this.orden).subscribe(data => {
       const respuestaTransaccion: IRespuestaTransaccion = data;
       //console.log('respuestaTransaccion.id', respuestaTransaccion.id);
@@ -102,6 +105,20 @@ export class CarritoComprasComponent implements OnInit {
       //console.log(data);
       console.log(respuestaTransaccion);
     });
+  }
+
+  encriptarDatosTarjeta(datosTarjetaCredito: ITarjetaCredito): string {
+    const cadenaDatosTarjeta = JSON.stringify(datosTarjetaCredito);
+    console.log('cadenaDatosTarjeta', cadenaDatosTarjeta);
+
+    const password = 'disPasswordIsSoSec§ur#!';
+    const key = CryptoJS.enc.Base64.parse(password);
+    console.log('key', key);
+    const iv  = CryptoJS.enc.Base64.parse('#base64IV#');
+    console.log('iv', iv);
+    const encrypted = CryptoJS.AES.encrypt('Secret Text', key, {iv: iv}).toString();
+    console.log('Datos encriptados', encrypted);
+    return encrypted;
   }
 
 }
