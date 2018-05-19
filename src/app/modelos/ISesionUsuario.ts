@@ -1,7 +1,8 @@
 import {IUsuario} from './IUsuario';
 
 export interface ISesionUsuario {
-  token: string;
+  token?: string;
+  mensaje?: string;
   //usuario: IUsuario;
-  idUsuario: number;
+  //idUsuario: number;
 }

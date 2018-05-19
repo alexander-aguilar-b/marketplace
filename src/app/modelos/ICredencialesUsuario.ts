@@ -1,4 +1,5 @@
 export interface ICredencialesUsuario{
-  usuario: string;
-  password: string;
+  //usuario: string;
+  email: string;
+  clave: string;
 }

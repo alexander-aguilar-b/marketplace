@@ -23,20 +23,17 @@ export class CarritoComprasComponent implements OnInit {
   cipher: any;
 
   publicKey = '-----BEGIN PUBLIC KEY-----\n' +
-    'MIICITANBgkqhkiG9w0BAQEFAAOCAg4AMIICCQKCAgBHjhuY0a7lSDL0IMLOu+NL\n' +
-    'Ew3dczoJEIJD5QKju/BEiKpfcqlhQ/JVfG0Y7QHYdoubgkiqjV6A8V4ovGkA7EzY\n' +
-    'RVCVVcZ1zvn9XHGdJ2HoT7qttQ0BJyqUoUPlsgUS+lfaJFBvvNsOYMVNSXOECcWx\n' +
-    'A2fqM/8l3NMTXJi2DmISlfCWD+bTewpYGYakmecrGoVJic/Whr5hTwWBbTw1LKvJ\n' +
-    'cHs8apo6yQuZjUlqtedAjVdYFOewwJ2O9y0nAv8auJfqkAPXO3D4MN0pRbpuDFjI\n' +
-    'YfZaLEMXFAvzkOJkWSoUZWfKJwqeh+Dmb4XqdDDsSq6e4fw0ZSjfBF5ZrRbgLh6y\n' +
-    'o80DmsYvmcftsrl66inpcQhqQNYnXh12YeaIhu1smUqPIuJxMUgLKfXICHR9xzB2\n' +
-    'Y+m0Z2+565K/bYKx+GX/OxOlez2PDSKg4GgTiMp11FHpBf6e30myp7zScJUl47at\n' +
-    'mFlLeK9B1E1I7tFjpMjdy7UrTI9Kdnc9AnllXoFMMTg7eMylxLe6SGSrzW4NB2vC\n' +
-    'jurj+A4YNGMmqoNnqWGe5agUuIiSGG7FgNHuzIw4Oaqp1vLqPmz8xUO6vVwA3AIr\n' +
-    'JsXwMlV1zi/N/gF6I9uOwK3UPaAcT19Ykr6mTwmEvJahB2mWl1wioogXybbaCPdr\n' +
-    '/iuYV1OqpKx0xsCYfZsSywIDAQAB\n' +
+    'MIIBITANBgkqhkiG9w0BAQEFAAOCAQ4AMIIBCQKCAQBm0E0fcAFtOl3aV+/AX3yH\n' +
+    'A7WruP5mB5haZksgRiZe4b+PMn/LlI9EumlF/UkOBRXpHUvRFpQwqPnECvrEIGFn\n' +
+    'xE/Zf188w/mv0RigXvtRSI9YvlcsU8ZuWQ3epdl2U6JUci7e34zH7tSbovZ6+9+7\n' +
+    'fbYvPbG9Ah0tM7fRSc08NFb+R6675QkGpU3p+/Njt7kMz0aJfkAIjuOvSDu9wO+o\n' +
+    'fnpup8pRhBtXQYlMFADEyPpCNtxQHHbw1Mcb/R/LmRD3ILrlBcqjDJwWs8362I3r\n' +
+    '+hOaVMeeGZCFuXcG0khsd+0YXOt+1VfGsuQa0idhwxJSgu9LwPHhVQtWptPoJ/79\n' +
+    'AgMBAAE=\n' +
     '-----END PUBLIC KEY-----';
   constructor(private servicioCompra: ServicioCompra, private router: Router) {
+    this.cipher = new jsencrypt.JSEncrypt();
+    this.cipher.setPublicKey(this.publicKey);
   }
 
   ngOnInit() {
@@ -44,8 +41,6 @@ export class CarritoComprasComponent implements OnInit {
     this.mostrarRealizarPago = false;
     this.orden = this.cargarOrden();
     this.textoIngresarEditarMedioPago = 'Ingresar Medio Pago';
-    this.cipher = new jsencrypt.JSEncrypt();
-    this.cipher.setPublicKey(this.publicKey);
     /*
     this.servicioCompra.consultar().subscribe(data => {
       console.log(data);
@@ -111,16 +106,28 @@ export class CarritoComprasComponent implements OnInit {
 
   realizarPago() {
     console.log(this.orden);
+    console.log('Datos antes de ser encriptados', JSON.stringify(this.orden.medioPago));
     const datosTarjetaEncriptados = this.cifrar(JSON.stringify(this.orden.medioPago));
-    console.log(datosTarjetaEncriptados);
+    console.log('datosTarjetaEncriptados', datosTarjetaEncriptados);
 
-    this.servicioCompra.realizarCompra(this.orden).subscribe(data => {
+    /*
+    this.servicioCompra.realizarPago(datosTarjetaEncriptados).subscribe(data => {
+      console.log('Respuesta servicio Node', data);
+    });
+    */
+
+    /*
+    this.servicioCompra.realizarCompra1(this.orden).subscribe(data => {
       const respuestaTransaccion: IRespuestaTransaccion = data;
       // console.log('respuestaTransaccion.id', respuestaTransaccion.id);
       // console.log('respuestaTransaccion.mensaje', respuestaTransaccion.mensaje);
       // console.log(data);
       console.log(respuestaTransaccion);
     });
+    */
+
+
+
   }
 
   cifrar(plainText: string): string {

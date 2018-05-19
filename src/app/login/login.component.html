@@ -5,9 +5,9 @@
   <div class="container">
     <div class="col-md-4">
       <div class="form-group">
-        <label for="login">Login:</label>
-        <input id="login" type="text" (ngModel)="login" name="login" (keyup)='onkeypress()' required  class="form-control " placeholder="Login..." />
-        <div *ngIf="loginForm.controls.login?.invalid && (loginForm.controls.login?.touched || mouseoverLogin)" class="form-control alert-danger">
+        <label for="login">Email:</label>
+        <input id="email" type="text" (ngModel)="email" name="email" (keyup)='onkeypress()' required  class="form-control " placeholder="maria.martinez@uniandes.edu.co" />
+        <div *ngIf="loginForm.controls.email?.invalid && (loginForm.controls.email?.touched || mouseoverLogin)" class="form-control alert-danger">
           <em>El login es requerido</em>
         </div>
       </div>

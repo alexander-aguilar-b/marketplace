@@ -15,13 +15,15 @@ import {IRespuestaTransaccion} from "../modelos/IRespuestaTransaccion";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import { catchError } from 'rxjs/operators';
+import {ServicioAutenticacion} from "./servicio.autenticacion";
 
 @Injectable()
 export class ServicioCompra {
-  constructor(private httpClient: HttpClient, private configuracion: ConfiguracionServicio) {
+  constructor(private httpClient: HttpClient, private configuracion: ConfiguracionServicio, private servicioAutenticacion: ServicioAutenticacion) {
   }
 
-  realizarCompra(ordenCompra: IOrden): any {
+  realizarCompra1(ordenCompra: IOrden): any {
+    const token = this.servicioAutenticacion.obtenerCookie('token');
     let headers: HttpHeaders;
     headers = new HttpHeaders({'Content-Type': 'application/json'});
     const body = JSON.stringify(ordenCompra);
@@ -29,6 +31,19 @@ export class ServicioCompra {
       headers: headers
     });
   }
+
+  realizarPago(datosPago: string): any {
+    const token = this.servicioAutenticacion.obtenerCookie('token');
+    let headers: HttpHeaders;
+    headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization' : 'Bearer ' + token});
+    const body = { data: datosPago };
+    console.log(body);
+    return this.httpClient.post(this.configuracion.baseUrl + 'comprar', body, {
+      headers: headers
+    });
+  }
+
+
 
   consultar(): any {
     let headers: HttpHeaders;

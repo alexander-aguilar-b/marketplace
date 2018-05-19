@@ -13,6 +13,8 @@ import {HttpModule} from "@angular/http";
 import {ServicioCompra} from "./servicios/servicio.compra";
 import {HttpClientModule} from "@angular/common/http";
 
+import { CookieService } from 'angular2-cookie/services/cookies.service';
+
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import {HttpClientModule} from "@angular/common/http";
   providers: [
     ConfiguracionServicio,
     ServicioAutenticacion,
-    ServicioCompra
+    ServicioCompra,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })
