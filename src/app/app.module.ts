@@ -14,13 +14,15 @@ import {ServicioCompra} from "./servicios/servicio.compra";
 import {HttpClientModule} from "@angular/common/http";
 
 import { CookieService } from 'angular2-cookie/services/cookies.service';
+import {BaseComponent} from "./base/base.component";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    CarritoComprasComponent
+    CarritoComprasComponent,
+    BaseComponent,
   ],
   imports: [
     BrowserModule,

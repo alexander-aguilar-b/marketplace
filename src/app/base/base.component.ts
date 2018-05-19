@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-base-component',
-  templateUrl: './base-component.html',
+  templateUrl: './base.component.html',
   styles: []
 })
 

@@ -110,11 +110,12 @@ export class CarritoComprasComponent implements OnInit {
     const datosTarjetaEncriptados = this.cifrar(JSON.stringify(this.orden.medioPago));
     console.log('datosTarjetaEncriptados', datosTarjetaEncriptados);
 
-    /*
+
     this.servicioCompra.realizarPago(datosTarjetaEncriptados).subscribe(data => {
       console.log('Respuesta servicio Node', data);
+      alert('La compra ha sido registrada correctamente');
     });
-    */
+
 
     /*
     this.servicioCompra.realizarCompra1(this.orden).subscribe(data => {
